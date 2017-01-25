@@ -12,7 +12,7 @@ export default class TopNav extends Component {
 			showCancelButton: true,
 		}, function(inputValue){
 			inputValue = inputValue.trim()
-			if(inputValue !== "" && inputValue.length === 17){
+			if(inputValue !== "" && inputValue.length > 6){
 				propHandler.setConversation(inputValue);		
 			}
 		});
@@ -30,8 +30,6 @@ export default class TopNav extends Component {
 					<div id="new-message-button" className="mdi mdi-block-helper"></div>
 				</nav>
 				)
-			break;
-
 			default:
 			return(
 				<nav id="topnav" className="animated fadeIn">

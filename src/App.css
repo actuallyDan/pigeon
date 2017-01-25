@@ -18,24 +18,40 @@
   url("/fonts/Biryani/Biryani-Regular.woff") format("woff"), 
   url("/fonts/Biryani/Biryani-Regular.ttf") format("truetype");
   font-weight: 400;
-}*/
-body {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
-  background-color: #212121;
-  color: #616161;
-  outline: none !important;
-  font-family: 'Rajdhani', sans-serif;
-}
-.App {
-  text-align: center;
-}
-.container {
-  text-align: center;
-}
-/* Login Form */
-.logo-login{
+  }*/
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background-color: #212121;
+    color: #616161;
+    font-family: 'Rajdhani', sans-serif;
+  }
+  *:focus {
+    outline: none;
+  }
+  .App {
+    text-align: center;
+  }
+  .container {
+    text-align: center;
+  }
+  ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:    #1de9b6;
+  }
+  :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color:    #1de9b6;
+   opacity:  1;
+ }
+ ::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color:    #1de9b6;
+   opacity:  1;
+ }
+ :-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color:    #1de9b6;
+ }
+ /* Login Form */
+ .logo-login{
   margin-bottom: 20%;
   font-size: 5em;
   color: #00bfa5;
@@ -92,19 +108,6 @@ body {
 #dashboard-main {
   margin-top: 3em;
 }
-#conversation-item {
-  height: 4em;
-  line-height: 1.5em;
-  text-align: left;
-  padding-left: 3em;
-  border-bottom: 1px solid #424242;
-}
-.conversation-item-username{
-
-}
-.conversation-item-last-message{
-
-}
 #no-conversations-dialog{
   margin-top: 6em;
   padding: 2em;
@@ -118,17 +121,95 @@ body {
   -ms-transform: scale(-1, 1);
   transform: scale(-1, 1);
 }
+#messageInput{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 90%;
+  border: solid 1px #424242;
+  height: 2em;
+  line-height: 1.5em;
+  font-size: 18px;
+  resize: none;
+  background: #212121;
+  color: white;
+  padding: 0 5%;
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
 
+
+}
+
+#conversation-username {
+  position: fixed;
+  width: 60%;
+  top: 0;
+  margin: 0.5em 20%;
+  text-align: center;
+  font-size: 1.5em;
+}
 #no-conversations-dialog p {
   margin-top: 0;
 }
+
+/* messagesList */
+.conversation-item {
+  height: 5em;
+  line-height: 1.5em;
+  text-align: left;
+  padding-left: 1.5em;
+  border-bottom: 1px solid #424242;
+  margin-top: 3.3em;
+}
+.conversation-item-username{
+  font-size: 1.3em;
+  color: white;
+  margin-bottom: 0.2em;
+}
+.conversation-item-last-message{
+  margin-top: 0.3em;
+  text-overflow: clip;
+}
+.conversation-item-time {
+}
+/*  Conversation */
+#messageList {
+  margin-top: 4em;
+  margin-bottom: 4em;
+}
+.message {
+  min-width: 20px;
+  max-width: 65%;
+  color: white;
+  padding: .5em;
+  font-weight: 300;
+  margin-bottom: 5px;
+  min-height: 40px;
+  border: 1px solid #616161;
+  margin: 0 0.8em;
+}
+.message-block{
+  width: 100%;
+  display: inline-block;
+}
+.user-message{
+  color: #1de9b6;
+  float: right;
+  border: 1px solid #1de9b6;
+}
+.other-message{
+  color: #fff;
+  float: left;
+  border: 1px solid #fff;
+}
 /* Sweetalert override */
 .sweet-alert {
-font-family: "Rajdhani", sans-serif;
-    border-radius: 0;
-    border: 1px solid #1de9b6;
-    color: white !important;
-    background: #212121;
+  font-family: "Rajdhani", sans-serif;
+  border-radius: 0;
+  border: 1px solid #1de9b6;
+  color: white !important;
+  background: #212121;
 }
 .sweet-alert h2 {
   color: #fff !important;
@@ -155,11 +236,11 @@ font-family: "Rajdhani", sans-serif;
   border: #1de9b6;
 }
 .sweet-alert .sa-icon.sa-success::before, .sweet-alert .sa-icon.sa-success::after {
-      background-color: #212121 !important;
+  background-color: #212121 !important;
 
 }
 .sweet-alert .sa-icon.sa-success .sa-fix{
-    background-color: #212121 !important;
+  background-color: #212121 !important;
 }
 .sweet-alert .sa-icon.sa-success .sa-line {
   height: 2px;
@@ -173,22 +254,22 @@ font-family: "Rajdhani", sans-serif;
   border-color: #1de9b6 !important;
 }
 .sweet-alert.show-input input {
-    border: none;
-    border-bottom: 1px solid #1de9b6;
-    background: none;
-    border-radius: 0;
-    color: white;
+  border: none;
+  border-bottom: 1px solid #1de9b6;
+  background: none;
+  border-radius: 0;
+  color: white;
 }
 .sweet-alert.show-input input:focus {
-    outline: none;
-    box-shadow: none;
+  outline: none;
+  box-shadow: none;
 }
 .sweet-alert button.confirm:hover {
-    color: #424242 !important;
-    background: #1de9b6 !important;
+  color: #424242 !important;
+  background: #1de9b6 !important;
 }
 .sweet-alert button.cancel:hover {
-    color: #424242 !important;
-    background: #f44336 !important;
-    border: #f44336 1px solid;
+  color: #424242 !important;
+  background: #f44336 !important;
+  border: #f44336 1px solid;
 }
