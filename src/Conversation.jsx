@@ -43,7 +43,7 @@ export default class Conversation extends React.Component {
 								</div>)
 					})}
 					</div>
-					<form id="conversation-box" onSubmit={this.sendMessage.bind(this)} onSubmit={this.sendMessage.bind(this)}>
+					<form id="conversation-box" onSubmit={this.sendMessage.bind(this)}>
 						<input id="messageInput" placeholder="Enter message here" ref="messageText" />
 					</form>
 				</div>

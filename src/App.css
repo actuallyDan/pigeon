@@ -89,6 +89,8 @@
   top: 0;
   width: 100%;
   line-height: 3em;
+  background-color: #212121 !important;
+  
 }
 #new-message-button{
  color: #1de9b6;
@@ -188,6 +190,7 @@
   min-height: 40px;
   border: 1px solid #616161;
   margin: 0 0.8em;
+  word-wrap: break-word;
 }
 .message-block{
   width: 100%;
