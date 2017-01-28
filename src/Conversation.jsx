@@ -3,6 +3,7 @@ import Ably from 'ably/browser/static/ably-commonjs.js';
 let realtime = new Ably.Realtime('aADW4A.yTMvtw:bVoey4GlqzTW__09');
 
 export default class Conversation extends React.Component {
+
 	sendMessage(e){
 		if(this.refs.messageText.value.trim() !== ""){
 			e.preventDefault();
@@ -20,23 +21,29 @@ export default class Conversation extends React.Component {
 			});
 					
 			window.localStorage.setItem("messages", JSON.stringify(messagesDb));
+
+			// Update State
 			this.props.updateState.bind(this);
 
-			channel.publish("update", {"userId" : thisUser.userId, "username": thisUser.username, "message" : messageInput, "timestamp" : timestamp});
+			// Send Message
+			channel.publish("message", {"userId" : thisUser.userId, "username": thisUser.username, "message" : messageInput, "timestamp" : timestamp});
 			document.getElementById("messageInput").value = "";
+
+			// Scroll to bottom
 		}
 	}
+
 	render(){
-		//let userId = this.props.userId, username = this.props.conversation.username, messages = this.props.conversation.messages;
+		let userId = this.props.userId, username = this.props.conversation.username, messages = this.props.conversation.messages;
 		let thisUser = JSON.parse(window.localStorage.getItem("userInfo"));
 		let count = 0;
 		return (<div className="animated slideIn">
-					<div id="conversation-username">Name here</div>
+					<div id="conversation-username">{username !== "" ? username : userId}</div>
 					<div id="messageList">
-					{this.props.conversation.messages.map((msgObj)=>{
+					{messages.map((msgObj)=>{
 						++count;
 						return(<div className='message-block' key={msgObj.timestamp + "-" + count}>
-								<div className={"message " +( thisUser.userId === msgObj.userId ? "user-message" : "other-message")}> 
+								<div className={"message " + (thisUser.userId === msgObj.userId ? "user-message" : "other-message")}> 
 								{ msgObj.message }
 								<br/>
 								</div>

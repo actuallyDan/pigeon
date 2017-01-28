@@ -10,12 +10,17 @@ export default class TopNav extends Component {
 			text: 'Enter the user\'s ID',
 			type: 'input',
 			showCancelButton: true,
-		}, function(inputValue){
-			inputValue = inputValue.trim()
-			if(inputValue !== "" && inputValue.length > 6){
-				propHandler.setConversation(inputValue);		
-			}
-		});
+			closeOnCancel: true
+		}, function(inputValue, isConfirm){
+			if(isConfirm){
+				inputValue = inputValue.trim()
+				if(inputValue !== "" && inputValue.length > 6){
+					propHandler.setConversation(inputValue);		
+				}
+			} else {
+			// cancel
+		}
+	});
 	}
 	backToMessages(){
 		this.props.setConversation(null);
@@ -26,15 +31,15 @@ export default class TopNav extends Component {
 			case "conversation":
 			return(
 				<nav id="topnav" className="animated fadeIn">
-					<div id="settings-button" className="mdi mdi-chevron-left" onClick={this.backToMessages.bind(this)}></div>
-					<div id="new-message-button" className="mdi mdi-block-helper"></div>
+				<div id="settings-button" className="mdi mdi-chevron-left" onClick={this.backToMessages.bind(this)}></div>
+				<div id="new-message-button" className="mdi mdi-block-helper"></div>
 				</nav>
 				)
 			default:
 			return(
 				<nav id="topnav" className="animated fadeIn">
-					<div id="settings-button" className="mdi mdi-sort-variant"></div>
-					<div id="new-message-button" className="mdi mdi-account-plus" onClick={this.newConvo.bind(this)}></div>
+				<div id="settings-button" className="mdi mdi-sort-variant"></div>
+				<div id="new-message-button" className="mdi mdi-account-plus" onClick={this.newConvo.bind(this)}></div>
 				</nav>
 				)
 		}

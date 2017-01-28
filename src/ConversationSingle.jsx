@@ -2,9 +2,6 @@ import React from 'react';
 import moment from 'moment';
 
 export default class ConversationSingle extends React.Component {
-	// constructor(props){
-	// 	super(props);
-	// }
 	setConvo(){
 		this.props.setConvo(this.props.userId)
 	}

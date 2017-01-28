@@ -5,8 +5,8 @@ import 'mdi/css/materialdesignicons.min.css';
 import './animate.min.css';
 
 class App extends Component {
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
 
     this.state = {
       loggedIn : window.localStorage.getItem("loggedIn")
