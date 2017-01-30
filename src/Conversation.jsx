@@ -24,14 +24,14 @@ export default class Conversation extends React.Component {
 	}
 
 	render(){
-		let userId = this.props.conversation.userId, username = this.props.conversation.username, messages = this.state.messages;
+		let messages = this.state.messages;
 		let thisUser = JSON.parse(window.localStorage.getItem("userInfo"));
 		let count = 0;
-		return (<div className="animated slideInRight">
+		return (<div className="animated fadeIn">
 					<div id="messageList">
 					{messages.map((msgObj)=>{
 						++count;
-						return(<div className='message-block' key={msgObj.timestamp + "-" + count}>
+						return(<div className='message-block animated fadeInUp' key={msgObj.timestamp + "-" + count}>
 								<div className={"message " + (thisUser.userId === msgObj.userId ? "user-message" : "other-message")}> 
 								{ msgObj.message }
 								<br/>

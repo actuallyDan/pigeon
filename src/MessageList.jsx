@@ -7,7 +7,7 @@ export default class MessageList extends React.Component {
 	render(){
 		console.log(this.props.messagesDb);
 		return(
-			<div>
+			<div id="messagesList">
 			{
 				Object.keys(this.props.messagesDb).length === 1 && this.props.messagesDb[Object.keys(this.props.messagesDb)[0]].messages.length === 0  ? 
 				
