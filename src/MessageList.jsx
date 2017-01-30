@@ -17,7 +17,15 @@ export default class MessageList extends React.Component {
 						</div>
 				:
 					Object.keys(this.props.messagesDb).map((obj)=>{
-						return this.props.messagesDb[obj].messages.length > 0 ? <ConversationSingle userId={obj} username={this.props.messagesDb[obj].username} key={obj} message={this.props.messagesDb[obj].messages[this.props.messagesDb[obj].messages.length - 1]} setConvo={this.setConvo.bind(this)}/> : ""
+						return this.props.messagesDb[obj].messages.length > 0 
+						? <ConversationSingle 
+						userId={obj} 
+						username={this.props.messagesDb[obj].username} 
+						key={obj} 
+						isNew={this.props.messagesDb[obj].lastChecked > this.props.messagesDb[obj].messages[this.props.messagesDb[obj].messages.length - 1].timestamp ? "" : "new-msg"}
+						message={this.props.messagesDb[obj].messages[this.props.messagesDb[obj].messages.length - 1]} 
+						setConvo={this.setConvo.bind(this)}/> 
+						: ""
 					})
 				
 			}

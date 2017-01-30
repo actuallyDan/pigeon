@@ -1,5 +1,4 @@
 import React from 'react';
-import Ably from 'ably/browser/static/ably-commonjs.js';
 
 export default class Conversation extends React.Component {
 	constructor(props){
@@ -28,8 +27,7 @@ export default class Conversation extends React.Component {
 		let userId = this.props.conversation.userId, username = this.props.conversation.username, messages = this.state.messages;
 		let thisUser = JSON.parse(window.localStorage.getItem("userInfo"));
 		let count = 0;
-		return (<div className="animated slideIn">
-					<div id="conversation-username">{username !== "" ? username : userId}</div>
+		return (<div className="animated slideInRight">
 					<div id="messageList">
 					{messages.map((msgObj)=>{
 						++count;

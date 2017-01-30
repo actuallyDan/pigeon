@@ -40,7 +40,8 @@ export default class Dashboard extends React.Component {
 					messagesDb[msg.data.userId] = {
 						userId: msg.data.userId,
 						username: msg.data.username,
-						messages : []
+						messages : [],
+						lastChecked: new Date().getTime()
 					};
 
 
@@ -74,7 +75,7 @@ export default class Dashboard extends React.Component {
 		this.updateScroll.bind(this);	
 	}
 	updateScroll(){
-    	let documentHeight = document.documentElement.offsetHeight;
+		let documentHeight = document.documentElement.offsetHeight;
 		let viewportHeight = window.innerHeight;
 		window.scrollTo(0, documentHeight - viewportHeight);
 	}
@@ -99,16 +100,18 @@ export default class Dashboard extends React.Component {
 					messagesDb[userId] = {
 						userId: userId,
 						username: '',
-						messages : []
+						messages : [],
+						lastChecked: new Date().getTime()
 					};
 
 
 					window.localStorage.setItem("messages", JSON.stringify(messagesDb));					
-					// this.setState({
-					// 	messagesDb : JSON.parse(window.localStorage.getItem("messages"))
-					// });
+					
 					console.log("new conversation created");
-			}
+				}
+			// Update lastChecked 
+			this.updateLastChecked(userId);
+
 			this.setState({
 				view: "conversation",
 				conversation: userId,
@@ -116,21 +119,30 @@ export default class Dashboard extends React.Component {
 			});
 		}	
 	}
+	updateLastChecked(userId){
+		let messagesDb = JSON.parse(window.localStorage.getItem("messages"));
+
+		messagesDb[userId].lastChecked = new Date().getTime();
+
+		window.localStorage.setItem("messages", JSON.stringify(messagesDb));					
+
+	}
 	sendMessage(refs){
 		let messageInput = refs.messageText.value.trim();
-			let timestamp = new Date().getTime();
-			let channel = realtime.channels.get(this.state.conversation);
-			let thisUser = this.state.user;
+		let timestamp = new Date().getTime();
+		let channel = realtime.channels.get(this.state.conversation);
+		let thisUser = this.state.user;
 
-			let messagesDb = JSON.parse(window.localStorage.getItem("messages"));
-				messagesDb[this.state.conversation].messages.push({
-				"userId" : thisUser.userId,
-				"username" : thisUser.username, 
-				"message" : messageInput, 
-				"timestamp" : timestamp
-			});
-					
-			window.localStorage.setItem("messages", JSON.stringify(messagesDb));
+		let messagesDb = JSON.parse(window.localStorage.getItem("messages"));
+		messagesDb[this.state.conversation].messages.push({
+			"userId" : thisUser.userId,
+			"username" : thisUser.username, 
+			"message" : messageInput, 
+			"timestamp" : timestamp
+		});
+		messagesDb[this.state.conversation].lastChecked = new Date().getTime();
+
+		window.localStorage.setItem("messages", JSON.stringify(messagesDb));
 
 			// Update State
 			this.setState({
@@ -145,23 +157,23 @@ export default class Dashboard extends React.Component {
 
 			// Scroll to bottom
 			//???
-	}
-	render(){
-		let view;
-		switch(this.state.view){
-			case "conversation":
-			view = <Conversation conversation={this.state.messagesDb[this.state.conversation]} sendMessage={this.sendMessage.bind(this)}/>;
-			break;
-			default:
-			view = <MessageList messagesDb={this.state.messagesDb} setConvo={this.setConversation.bind(this)}/>;
 		}
-		return(
-			<div className="container animated fadeIn">
-			<TopNav view={this.state.view} setConversation={this.setConversation.bind(this)}/>
-			<div id="dashboard-main">
-			{view}
-			</div>
-			</div>
-			)
+		render(){
+			let view;
+			switch(this.state.view){
+				case "conversation":
+				view = <Conversation conversation={this.state.messagesDb[this.state.conversation]} sendMessage={this.sendMessage.bind(this)}/>;
+				break;
+				default:
+				view = <MessageList messagesDb={this.state.messagesDb} setConvo={this.setConversation.bind(this)}/>;
+			}
+			return(
+				<div className="container animated fadeIn">
+				<TopNav view={this.state.view} setConversation={this.setConversation.bind(this)} conversationHeader={this.state.messagesDb[this.state.conversation]}/>
+				<div id="dashboard-main">
+				{view}
+				</div>
+				</div>
+				)
+		}
 	}
-}

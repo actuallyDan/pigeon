@@ -31,6 +31,7 @@ export default class TopNav extends Component {
 			return(
 				<nav id="topnav" className="animated fadeIn">
 				<div id="settings-button" className="mdi mdi-chevron-left" onClick={this.backToMessages.bind(this)}></div>
+					<div id="conversation-username">{this.props.conversationHeader.username !== "" ? this.props.conversationHeader.username : this.props.conversationHeader.userId}</div>
 				<div id="new-message-button" className="mdi mdi-block-helper"></div>
 				</nav>
 				)

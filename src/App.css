@@ -177,6 +177,9 @@
 }
 .conversation-item-time {
 }
+.new-msg{
+  color: #1de9b6;
+}
 /*  Conversation */
 #messageList {
   margin-top: 4em;
