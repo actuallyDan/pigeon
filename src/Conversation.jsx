@@ -1,40 +1,31 @@
 import React from 'react';
 import Ably from 'ably/browser/static/ably-commonjs.js';
-let realtime = new Ably.Realtime('aADW4A.yTMvtw:bVoey4GlqzTW__09');
 
 export default class Conversation extends React.Component {
+	constructor(props){
+		super(props);
 
+		this.state = {
+			messages : this.props.conversation.messages
+		};
+	}
+	componentWillReceiveProps(nextProps){
+		this.setState({
+			messages : nextProps.conversation.messages
+		});
+	}
+	shouldComponentUpdate(nextProps) {
+    	return true;
+	}
 	sendMessage(e){
 		if(this.refs.messageText.value.trim() !== ""){
 			e.preventDefault();
-			let messageInput = this.refs.messageText.value.trim();
-			let timestamp = new Date().getTime();
-			let channel = realtime.channels.get(this.props.userId);
-			let thisUser = JSON.parse(window.localStorage.getItem("userInfo"));
-
-			let messagesDb = JSON.parse(window.localStorage.getItem("messages"));
-				messagesDb[this.props.userId].messages.push({
-				"userId" : thisUser.userId,
-				"username" : thisUser.username, 
-				"message" : messageInput, 
-				"timestamp" : timestamp
-			});
-					
-			window.localStorage.setItem("messages", JSON.stringify(messagesDb));
-
-			// Update State
-			this.props.updateState.bind(this);
-
-			// Send Message
-			channel.publish("message", {"userId" : thisUser.userId, "username": thisUser.username, "message" : messageInput, "timestamp" : timestamp});
-			document.getElementById("messageInput").value = "";
-
-			// Scroll to bottom
+			this.props.sendMessage(this.refs);
 		}
 	}
 
 	render(){
-		let userId = this.props.userId, username = this.props.conversation.username, messages = this.props.conversation.messages;
+		let userId = this.props.conversation.userId, username = this.props.conversation.username, messages = this.state.messages;
 		let thisUser = JSON.parse(window.localStorage.getItem("userInfo"));
 		let count = 0;
 		return (<div className="animated slideIn">
@@ -51,7 +42,7 @@ export default class Conversation extends React.Component {
 					})}
 					</div>
 					<form id="conversation-box" onSubmit={this.sendMessage.bind(this)}>
-						<input id="messageInput" placeholder="Enter message here" ref="messageText" />
+						<input id="messageInput" placeholder="Enter message here" ref="messageText" autoComplete="off"/>
 					</form>
 				</div>
 			)

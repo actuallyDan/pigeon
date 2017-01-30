@@ -11,15 +11,14 @@ export default class TopNav extends Component {
 			type: 'input',
 			showCancelButton: true,
 			closeOnCancel: true
-		}, function(inputValue, isConfirm){
-			if(isConfirm){
-				inputValue = inputValue.trim()
-				if(inputValue !== "" && inputValue.length > 6){
-					propHandler.setConversation(inputValue);		
-				}
-			} else {
-			// cancel
-		}
+		}, function(inputValue){
+			if(inputValue === false){
+				return false;
+			}
+			inputValue = inputValue.trim()
+			if(inputValue !== "" && inputValue.length > 6){
+				propHandler.setConversation(inputValue);		
+			}
 	});
 	}
 	backToMessages(){

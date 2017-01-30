@@ -116,12 +116,41 @@ export default class Dashboard extends React.Component {
 			});
 		}	
 	}
+	sendMessage(refs){
+		let messageInput = refs.messageText.value.trim();
+			let timestamp = new Date().getTime();
+			let channel = realtime.channels.get(this.state.conversation);
+			let thisUser = this.state.user;
 
+			let messagesDb = JSON.parse(window.localStorage.getItem("messages"));
+				messagesDb[this.state.conversation].messages.push({
+				"userId" : thisUser.userId,
+				"username" : thisUser.username, 
+				"message" : messageInput, 
+				"timestamp" : timestamp
+			});
+					
+			window.localStorage.setItem("messages", JSON.stringify(messagesDb));
+
+			// Update State
+			this.setState({
+				view: "conversation",
+				conversation: this.state.conversation,
+				messagesDb : JSON.parse(window.localStorage.getItem("messages")),
+			});
+
+			// Send Message
+			channel.publish("message", {"userId" : thisUser.userId, "username": thisUser.username, "message" : messageInput, "timestamp" : timestamp});
+			document.getElementById("messageInput").value = "";
+
+			// Scroll to bottom
+			//???
+	}
 	render(){
 		let view;
 		switch(this.state.view){
 			case "conversation":
-			view = <Conversation userId={this.state.conversation} conversation={this.state.messagesDb[this.state.conversation]}/>;
+			view = <Conversation conversation={this.state.messagesDb[this.state.conversation]} sendMessage={this.sendMessage.bind(this)}/>;
 			break;
 			default:
 			view = <MessageList messagesDb={this.state.messagesDb} setConvo={this.setConversation.bind(this)}/>;
